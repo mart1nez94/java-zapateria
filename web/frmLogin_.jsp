@@ -15,7 +15,7 @@
     String strPassword = request.getParameter("contrasena");
     ServletContext context = getServletContext();
     Connection orclConn = OracleConnect.getConnection(context);
-    String command ="{CALL(?,?,?)} ";
+    String command ="{CALL P_GETMENUS(?,?,?)} ";
     CallableStatement cstmt = orclConn.prepareCall(command);
     cstmt.setString(1, strUsuario);
     cstmt.setString(2, strPassword);
@@ -36,10 +36,10 @@
             while(rest.next()){
                 int intOrden = rest.getInt(1);
                 String strMenu = rest.getString(2);
-            }
         %>
-        <li><% intOrden %></li>
-        <li><% strMenu %></li>
+        <li><%= intOrden %></li>
+        <li><%= strMenu %></li>
         </ul>
+        <%}%>
     </body>
 </html>

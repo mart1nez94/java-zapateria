@@ -36,7 +36,9 @@
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
-            <source-roots/>
+            <source-roots>
+                <root id="src.java.dir" name="Source Packages"/>
+            </source-roots>
             <test-roots/>
         </data>
     </configuration>

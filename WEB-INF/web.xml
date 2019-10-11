@@ -16,7 +16,7 @@
     
     <context-param>
         <param-name>url</param-name>
-        <param-value>jdbc:oracle:thin:@192.168.1.64:1521:ORCL</param-value>
+        <param-value>jdbc:oracle:thin:@desktop-btocd7b:1521:ORCL</param-value>
     </context-param>
     <context-param>
         <param-name>user</param-name>
