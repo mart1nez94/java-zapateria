@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="anntuil.OracleConnect"%>
 <%@page import="javax.servlet.ServletContext"%>
+<%@page import="java.lang.Integer"%>
 <%@page import="java.sql.*"%>
 <%@page import="oracle.jdbc.*"%>
 
@@ -15,14 +16,28 @@
     String strPassword = request.getParameter("contrasena");
     ServletContext context = getServletContext();
     Connection orclConn = OracleConnect.getConnection(context);
-    String command ="{CALL P_GETMENUS(?,?,?)} ";
+    String command ="{CALL P_VALIDATEUSER(?,?,?)} ";
     CallableStatement cstmt = orclConn.prepareCall(command);
     cstmt.setString(1, strUsuario);
     cstmt.setString(2, strPassword);
+    Integer isValidate =1;
     //Se inserta un cursor para resivir una respuesta el sp, que viene siendo de la salida
-    cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+    cstmt.registerOutParameter(3,java.sql.Types.INTEGER);
     cstmt.execute();
-    ResultSet rest =((OracleCallableStatement) cstmt).getCursor(3);
+    int intResult =  cstmt.getInt(3);
+    HttpSession s = request.getSession();
+    s.setAttribute("value",String.valueOf(intResult));
+    s.setAttribute("usuario", strUsuario);
+    if(s.getAttribute("value") != null){
+        if(s.getAttribute("value") =="0"){
+            response.sendRedirect("login.jsp");
+        }
+        
+        if(s.getAttribute("value") =="1"){
+            response.sendRedirect("idnex.jsp");
+        }
+    }
+    
     %>
 <!DOCTYPE html>
 <html>
@@ -32,14 +47,7 @@
     </head>
     <body>
         <ul>
-        <% 
-            while(rest.next()){
-                int intOrden = rest.getInt(1);
-                String strMenu = rest.getString(2);
-        %>
-        <li><%= intOrden %></li>
-        <li><%= strMenu %></li>
+            <%=intResult%>
         </ul>
-        <%}%>
-    </body>
+    </body>intResult
 </html>

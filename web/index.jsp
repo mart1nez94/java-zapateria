@@ -1,3 +1,24 @@
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="anntuil.OracleConnect"%>
+<%@page import="javax.servlet.ServletContext"%>
+<%@page import="java.lang.Integer"%>
+<%@page import="java.sql.*"%>
+<%@page import="oracle.jdbc.*"%>
+<%
+   
+    ServletContext context = getServletContext();
+    Connection orclConn = OracleConnect.getConnection(context);
+    String command ="{CALL P_GETMENUS(?,?)}";
+    CallableStatement cstmt = orclConn.prepareCall(command);
+    HttpSession s = request.getSession();
+    String usuario  = s.getAttribute("usuario").toString();
+    cstmt.setString(1, usuario);
+    cstmt.registerOutParameter(2,OracleTypes.CURSOR);
+    cstmt.execute();
+    ResultSet res = cstmt.getResultSet();
+ %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,6 +29,12 @@
     </head>
     <body>
         <div class="sidebar">
+            <% 
+                while(res.next()){
+                    String nombre = res.getString("NOMBREMENU");
+                    System.out.println("<a class='active' href='"+nombre+"'>"+nombre +"</a>");
+                }
+            %>
             <a class="active" href="#ventas">Ventas</a>
             <a href="#caja">Caja</a>
             <a href="#almacen">Almac&eacute;n</a>
@@ -17,7 +44,7 @@
 
         <div class="topnav">
             <div class="dropdown">
-                <button class="dropbtn">Usuario<i class="fa fa-caret-down"></i></button>
+                <button class="dropbtn"><%= s.getAttribute("usuario")%><i class="fa fa-caret-down"></i></button>
                 <div class="dropdown-content">
                     <a href="#">Link 1</a>
                     <a href="#">Link 2</a>
@@ -53,6 +80,7 @@
 			<td>Contact No</td>
 			<td><input type="text" name="contact" /></td>
                     </tr>
+                   
                 </table>
 		<input type="submit" value="Registrar" />
             </form>

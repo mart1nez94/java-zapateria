@@ -29,6 +29,26 @@
                                 <input type="submit" value="Iniciar" name="btnIniSesion" class="btLogin"/>
                             </td>
                         </tr>
+                         <tr>
+                        
+                        
+                        <td colspan="2" style="text-align: center">
+                        <%
+                            HttpSession s = request.getSession();
+                            if(s.getAttribute("value") !=  null){
+                                if(s.getAttribute("value").equals("0")){
+                                    s.setAttribute("usuario", "");
+                        %>
+                        <labe class="msgAlert">
+                            Usuario o contrase&ntilde;a inv&aacute;lidos.
+                        </labe>
+                        <%
+                                    response.sendRedirect("index.jsp");
+                                }
+                            }
+                         %>
+                        </td>
+                    </tr>
                     </table>
                 </form>
             </div>

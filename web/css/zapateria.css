@@ -120,3 +120,20 @@ div.content {
     float: none;
   }
 }
+
+.divTbl{
+    position: absolute;
+    top:35%;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin:auto;
+    width: 460px;
+    height: 190px;
+    background-color: rgb(0,0,.8);
+    display:table;
+}
+
+.msgAlert{
+    font-size: 10pt;
+    color:red;
+}
