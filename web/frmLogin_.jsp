@@ -33,21 +33,9 @@
             response.sendRedirect("login.jsp");
         }
         
-        if(s.getAttribute("value") =="1"){
-            response.sendRedirect("idnex.jsp");
+        if(s.getAttribute("value").equals("1")){
+            response.sendRedirect("index.jsp");
         }
     }
     
     %>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <ul>
-            <%=intResult%>
-        </ul>
-    </body>intResult
-</html>
