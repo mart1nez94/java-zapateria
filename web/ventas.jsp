@@ -1,7 +1,12 @@
 <%@include file="header.jsp"%>
+<%@page import="anntuil.OracleConnect"%>
+<%@page import="javax.servlet.ServletContext"%>
+<%@page import="java.lang.Integer"%>
+<%@page import="java.sql.*"%>
+<%@page import="oracle.jdbc.*"%>
 <script src="js/ann-tuil-ventas.js"></script>
 <form class="formUserInterface" name="frmVenta" id="frmVenta">
-    
+    <input type="hidden" name="txtCajero" value="<%=strUsuario%>"
     <div class="divTblForm">
         
      <div class="divRow">
@@ -19,7 +24,28 @@
             <div class="divDataCell">
                 <select name="txtVendedorName" style="width:300px">
                     <option value="0"> --Seleccione un vendedor-- </option>
-                    <option value="1"> Juan Perez </option>
+                    <% 
+                      ServletContext context2  = getServletContext();
+                      Connection orclCoon2 = OracleConnect.getConnection(context2);
+                      HttpSession s2 = request.getSession();
+                      String command2 = "{CALL P_GET_VENDEDORES(?)}";
+                      CallableStatement cstmt2 = orclCoon2.prepareCall(command2);
+                      cstmt2.registerOutParameter(1,OracleTypes.CURSOR);
+                      cstmt2.execute();
+                      ResultSet rset2 =((OracleCallableStatement) cstmt2).getCursor(1);
+                      
+                      while(rset2.next()){
+                          int intId = Integer.parseInt(rset2.getString(1));
+                          String strVendedor = rset2.getString(2);
+             %>
+                        <option value="<%=intId%>"><%= strVendedor%></option>
+             <%
+
+                      }
+             %>
+                      
+                    
+                 
                 </select>
             </div> 
       </div>
@@ -50,13 +76,14 @@
         <div class="divRow">
             <div class="divDataCell">
                 <button onClick="addItem(); return false;">Agregar</button>
-                <button>Borrar</button>
-                <button>Pegar</button>
+                <button onClick="removeItem()">Borrar</button>
+                <button onClick="saveVenta()">Pegar</button>
                 <button>Cancelar</button>
             </div>
         </div>
   </div>
-        
+</from>
+            
     
     
     
