@@ -1,7 +1,7 @@
 <%-- 
     Document   : login
     Created on : 3/10/2019, 02:20:29 PM
-    Author     : luiss
+    Author     : Armando Guadalupe Moreno Martinez
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

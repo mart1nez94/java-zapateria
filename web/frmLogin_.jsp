@@ -1,7 +1,7 @@
 <%-- 
     Document   : frmLogin_.jsp
     Created on : 4/10/2019, 02:06:04 PM
-    Author     : luiss
+    Author     : Armando Guadalupe Moreno Martinez
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

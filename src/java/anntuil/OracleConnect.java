@@ -9,7 +9,7 @@ import javax.servlet.ServletContext;
 
 /**
  *
- * @author luiss
+ * @author Armando Guadalupe Moreno Martinez
  */
 public class OracleConnect {
     
